@@ -7,6 +7,13 @@
 <body>
 <h1>Användare</h1>
 
+<form th:action="@{/users}" method="post">
+    <label for="username">Användarnamn:</label>
+    <input type="text" id="username" name="username" required>
+    <button type="submit">Spara användare</button>
+</form>
+
+
 <ul>
     <li th:each="user : ${users}"
         th:text="${user.username}">
