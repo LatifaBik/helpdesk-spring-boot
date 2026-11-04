@@ -4,6 +4,7 @@ import org.example.helpdeskspringboot.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +23,7 @@ public class TicketController {
                 ticketService.getTicketsByUserId(userId));
         return "tickets";
     }
+
     @PostMapping("/tickets")
     public String createTicket(@RequestParam("title") String title,
                                @RequestParam("description") String description,
@@ -29,6 +31,13 @@ public class TicketController {
         ticketService.createTicket(title, description, userId);
 
         return "redirect:/tickets?userId=" + userId;
+    }
+
+
+    @GetMapping("/tickets/{id}")
+    public String showTicket(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("ticket", ticketService.getTicketById(id));
+        return "ticket-detail";
     }
 
 }

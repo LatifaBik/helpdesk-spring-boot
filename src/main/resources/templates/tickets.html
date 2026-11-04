@@ -10,7 +10,7 @@
 <form th:action="@{/tickets}" method="post">
     <input type="hidden" name="userId" th:value="${userId}">
 
-    <div>
+       <div>
         <label for="title">Titel:</label>
         <input type="text" id="title" name="title"
                maxlength="255" required>
@@ -27,11 +27,18 @@
 
 <h2>Ärendelista</h2>
 
-<ul>
-    <li th:each="ticket : ${tickets}">
-        <span th:text="${ticket.title}"></span>
-        – <span th:text="${ticket.status}"></span>
-    </li>
-</ul>
+<table>
+    <tbody>
+    <tr th:each="ticket : ${tickets}">
+        <td th:text="|#${ticket.id}|"></td>
+        <td>
+            <a th:href="@{/tickets/{id}(id=${ticket.id})}"
+
+               th:text="${ticket.title}"></a>
+        </td>
+        <td th:text="${ticket.status}"></td>
+    </tr>
+</tbody>
+    </table>
 </body>
-</html>
+ </html>

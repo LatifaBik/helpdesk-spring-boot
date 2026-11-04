@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ärendedetaljer</title>
+</head>
+<body>
+<h1 th:text="${ticket.title}">Ärendets titel</h1>
+<p th:text="${ticket.description}"></p>
+<p>Status: <span th:text="${ticket.status}"></span></p>
+</body>
+</html>
