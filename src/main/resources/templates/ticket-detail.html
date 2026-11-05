@@ -8,5 +8,28 @@
 <h1 th:text="${ticket.title}">Ärendets titel</h1>
 <p th:text="${ticket.description}"></p>
 <p>Status: <span th:text="${ticket.status}"></span></p>
+
+<h2>Kommentarer</h2>
+
+<ul>
+    <li th:each="comment : ${comments}">
+        <strong th:text="${comment.author.username}"></strong>
+        <p th:text="${comment.content}"></p>
+    </li>
+</ul>
+
+<form th:action="@{/tickets/{id}/comments(id=${ticket.id})}"
+      method="post">
+
+    <label for="content">Skriv en kommentar</label>
+    <textarea id="content" name="content"
+              maxlength="5000" required></textarea>
+
+    <label for="userId">Användar-ID</label>
+    <input type="number" id="userId" name="userId"
+           min="1" required>
+
+    <button type="submit">Skicka kommentar</button>
+</form>
 </body>
 </html>
