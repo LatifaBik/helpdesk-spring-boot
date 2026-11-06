@@ -10,6 +10,8 @@
 <form th:action="@{/users}" method="post">
     <label for="username">Användarnamn:</label>
     <input type="text" id="username" name="username" required>
+    <label for="password">Lösenord:</label>
+    <input type="password" id="password" name="password" required>
     <button type="submit">Spara användare</button>
 </form>
 
@@ -17,7 +19,7 @@
 <ul>
     <li th:each="user : ${users}"
         th:text="${user.username}">
-    </li>
+</li>
 </ul>
 </body>
 </html>

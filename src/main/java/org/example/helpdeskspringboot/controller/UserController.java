@@ -23,8 +23,10 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public String createUser(@RequestParam("username") String username) {
-        userService.createUser(username);
+    public String createUser(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password){
+        userService.createUser(username, password);
         return "redirect:/users";
     }
 }

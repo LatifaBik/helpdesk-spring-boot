@@ -1,10 +1,6 @@
 package org.example.helpdeskspringboot.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +11,10 @@ public class User {
     private Long id;
 
     private String username;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
     public User() {
     }
@@ -26,8 +26,28 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+public enum Role {
+    USER,
+    AGENT
+}
 }
