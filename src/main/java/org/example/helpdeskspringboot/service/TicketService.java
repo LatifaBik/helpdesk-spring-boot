@@ -40,18 +40,18 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-
-
     public List<Ticket> getTicketsByUserId(Long userId) {
 
         return ticketRepository.findByCreatedById(userId);
     }
 
-    public Ticket getTicketById(Long id) {
+     public Ticket getTicketById(Long id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Ärendet finns inte"));
     }
-
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
+    }
 
 }

@@ -36,9 +36,19 @@ public class TicketController {
 
     @GetMapping("/tickets")
     public String showTickets(Principal principal, Model model) {
-        Long userId = getLoggedInUserId(principal);
-        model.addAttribute("userId", userId);
-        model.addAttribute("tickets", ticketService.getTicketsByUserId(userId));
+        User user = userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+
+        model.addAttribute("userId", user.getId());
+
+        if (user.getRole() == User.Role.AGENT) {
+            model.addAttribute("tickets", ticketService.getAllTickets());
+        } else if (user.getRole() == User.Role.USER) {
+            model.addAttribute("tickets", ticketService.getTicketsByUserId(user.getId()));
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
         return "tickets";
     }
 
