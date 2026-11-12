@@ -88,7 +88,14 @@ public class TicketController {
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("comments", commentService.getCommentsByTicketId(id));
+        model.addAttribute("isAgent", isAgent);
         return "ticket-detail";
+    }
+
+    @PostMapping("/tickets/{id}/assign")
+    public String assignTicket(@PathVariable("id") Long id, Principal principal) {
+        ticketService.assignTicketToSelf(id, principal.getName());
+        return "redirect:/tickets/" + id;
     }
 
 }

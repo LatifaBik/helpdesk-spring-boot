@@ -9,6 +9,12 @@
 <p th:text="${ticket.description}"></p>
 <p>Status: <span th:text="${ticket.status}"></span></p>
 
+<form th:if="${isAgent and ticket.assignedTo == null}"
+      th:action="@{/tickets/{id}/assign(id=${ticket.id})}"
+      method="post">
+    <button type="submit">Tilldela mig</button>
+</form>
+
 <h2>Kommentarer</h2>
 
 <ul>

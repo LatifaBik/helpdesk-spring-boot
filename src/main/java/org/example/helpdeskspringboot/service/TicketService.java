@@ -54,4 +54,14 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
+    public void assignTicketToSelf(Long ticketId, String username) {
+        User agent = userRepository.findByUsername(username)
+                .filter(user -> user.getRole() == User.Role.AGENT)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+
+        Ticket ticket = getTicketById(ticketId);
+        ticket.setAssignedTo(agent);
+        ticketRepository.save(ticket);
+    }
+
 }
