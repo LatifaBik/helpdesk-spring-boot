@@ -2,6 +2,7 @@ package org.example.helpdeskspringboot.controller;
 
 
 import org.example.helpdeskspringboot.entity.Ticket;
+import org.example.helpdeskspringboot.entity.TicketStatus;
 import org.example.helpdeskspringboot.entity.User;
 import org.example.helpdeskspringboot.repository.UserRepository;
 import org.example.helpdeskspringboot.service.CommentService;
@@ -89,12 +90,21 @@ public class TicketController {
         model.addAttribute("ticket", ticket);
         model.addAttribute("comments", commentService.getCommentsByTicketId(id));
         model.addAttribute("isAgent", isAgent);
+        model.addAttribute("statuses", TicketStatus.values());
         return "ticket-detail";
     }
 
     @PostMapping("/tickets/{id}/assign")
     public String assignTicket(@PathVariable("id") Long id, Principal principal) {
         ticketService.assignTicketToSelf(id, principal.getName());
+        return "redirect:/tickets/" + id;
+    }
+
+    @PostMapping("/tickets/{id}/status")
+    public String updateTicketStatus(@PathVariable("id") Long id,
+                                     @RequestParam("status") TicketStatus status,
+                                     Principal principal) {
+        ticketService.updateTicketStatus(id, status, principal.getName());
         return "redirect:/tickets/" + id;
     }
 

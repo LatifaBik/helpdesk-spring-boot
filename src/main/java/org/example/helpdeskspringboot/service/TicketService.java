@@ -1,6 +1,7 @@
 package org.example.helpdeskspringboot.service;
 
 import org.example.helpdeskspringboot.entity.Ticket;
+import org.example.helpdeskspringboot.entity.TicketStatus;
 import org.example.helpdeskspringboot.entity.User;
 import org.example.helpdeskspringboot.repository.TicketRepository;
 import org.example.helpdeskspringboot.repository.UserRepository;
@@ -61,6 +62,16 @@ public class TicketService {
 
         Ticket ticket = getTicketById(ticketId);
         ticket.setAssignedTo(agent);
+        ticketRepository.save(ticket);
+    }
+
+    public void updateTicketStatus(Long ticketId, TicketStatus status, String username) {
+        userRepository.findByUsername(username)
+                .filter(user -> user.getRole() == User.Role.AGENT)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+
+        Ticket ticket = getTicketById(ticketId);
+        ticket.setStatus(status);
         ticketRepository.save(ticket);
     }
 

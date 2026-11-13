@@ -9,6 +9,20 @@
 <p th:text="${ticket.description}"></p>
 <p>Status: <span th:text="${ticket.status}"></span></p>
 
+<form th:if="${isAgent}"
+      th:action="@{/tickets/{id}/status(id=${ticket.id})}"
+      method="post">
+    <label for="status">Ändra status</label>
+    <select id="status" name="status">
+        <option th:each="status : ${statuses}"
+                th:value="${status.name()}"
+                th:text="${status.name()}"
+                th:selected="${status == ticket.status}">
+        </option>
+    </select>
+    <button type="submit">Spara status</button>
+</form>
+
 <form th:if="${isAgent and ticket.assignedTo == null}"
       th:action="@{/tickets/{id}/assign(id=${ticket.id})}"
       method="post">
